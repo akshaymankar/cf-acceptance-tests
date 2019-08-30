@@ -52,12 +52,12 @@ var _ = RouteServicesDescribe("Route Services", func() {
 					"-f", filepath.Join(golangAsset, "manifest.yml"),
 				).Wait(Config.CfPushTimeoutDuration())).To(Exit(0))
 
-					Expect(cf.Cf( "push", routeServiceName,
-						"-b", Config.GetGoBuildpackName(),
-						"-m", DEFAULT_MEMORY_LIMIT,
-						"-p", loggingRouteServiceAsset,
-						"-f", filepath.Join(loggingRouteServiceAsset, "manifest.yml"),
-					).Wait(Config.CfPushTimeoutDuration())).To(Exit(0))
+				Expect(cf.Cf("push", routeServiceName,
+					"-b", Config.GetGoBuildpackName(),
+					"-m", DEFAULT_MEMORY_LIMIT,
+					"-p", loggingRouteServiceAsset,
+					"-f", filepath.Join(loggingRouteServiceAsset, "manifest.yml"),
+				).Wait(Config.CfPushTimeoutDuration())).To(Exit(0))
 
 				configureBroker(brokerAppName, routeServiceName)
 				bindRouteToService(appName, serviceInstanceName)
@@ -153,7 +153,6 @@ var _ = RouteServicesDescribe("Route Services", func() {
 				createServiceInstance(serviceInstanceName, serviceName)
 
 				Expect(cf.Cf("create-route",
-					TestSetup.RegularUserContext().Space,
 					Config.GetAppsDomain(),
 					"--hostname", hostname,
 				).Wait()).To(Exit(0))
